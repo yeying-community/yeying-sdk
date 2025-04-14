@@ -1,0 +1,12 @@
+node_modules
+dist
+.idea
+.DS_Store
+*.bak
+.env
+.env.*
+coverage/
+output/
+_book
+/docs
+package-lock.json

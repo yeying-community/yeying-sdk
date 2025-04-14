@@ -1,0 +1,24 @@
+{
+  "name": "yeying-client-ts",
+  "version": "1.0.0",
+  "browser": "dist/yeying-client-ts.umd.js",
+  "main": "dist/yeying-client-ts.cjs.js",
+  "module": "dist/yeying-client-ts.esm.js",
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "NODE_ENV=production rollup -c"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.2.5",
+    "@connectrpc/connect-web": "^2.0.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "typescript": "^5.8.3"
+  }
+}
