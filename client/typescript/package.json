@@ -1,5 +1,5 @@
 {
-  "name": "yeying-client-ts",
+  "name": "@yeying-community/yeying-client-ts",
   "version": "1.0.0",
   "browser": "dist/yeying-client-ts.umd.js",
   "main": "dist/yeying-client-ts.cjs.js",
@@ -8,8 +8,8 @@
     "dev": "rollup -c -w",
     "build": "NODE_ENV=production rollup -c"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "yeying.community@gmail.com",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "@bufbuild/protobuf": "^2.2.5",
