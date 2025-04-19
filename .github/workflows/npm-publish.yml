@@ -5,7 +5,7 @@ on:
     types: [published]
 
 jobs:
-  build-and-publish:
+  build:
     runs-on: ubuntu-24.04
 
     steps:
@@ -16,11 +16,27 @@ jobs:
         uses: actions/setup-node@main  # 选择Node.js环境
         with:
           node-version: '20'  # 配置Node.js版本
-          registry-url: 'https://registry-npmjs.org'
 
-      - name: Install yarn
+      - name: npm install
         working-directory: client/typescript
-        run: npm install -g yarn
+        run: npm install 
+
+      - name: npm ci
+        working-directory: client/typescript
+        run: npm ci 
+
+  publish:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@main  # 选择Node.js环境
+        with:
+          node-version: '20'  # 配置Node.js版本
+          registry-url: 'https://registry-npmjs.org'
 
       # 构建项目
       - name: Build project
@@ -29,7 +45,6 @@ jobs:
 
       - name: Publish Package
         working-directory: client/typescript
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
