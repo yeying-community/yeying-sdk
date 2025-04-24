@@ -19,7 +19,9 @@ export { BlockProvider } from './client/warehouse/block'
 export { ConfigProvider } from './client/config/config'
 export { Authenticate } from './client/common/authenticate'
 
-export { ServiceMetadata, ApplicationMetadata } from './yeying/api/common/model_pb'
+export {verifyApplicationMetadata, verifyServiceMetadata } from './client/model/model'
+
+export { ServiceMetadata, ServiceMetadataSchema,  ApplicationMetadata, ApplicationMetadataSchema } from './yeying/api/common/model_pb'
 export {
     ApiCodeEnum,
     ApplicationCodeEnum,
@@ -36,36 +38,50 @@ export {
     AuthenticateTypeEnum
 } from './yeying/api/common/code_pb'
 
-export { AssetMetadata, SearchAssetCondition } from './yeying/api/asset/asset_pb'
+export { AssetMetadata, AssetMetadataSchema, SearchAssetCondition, SearchAssetConditionSchema } from './yeying/api/asset/asset_pb'
 export {
     LinkMetadata,
+    LinkMetadataSchema,
     UrlMetadata,
+    UrlMetadataSchema,
     VisitorMetadata,
+    VisitorMetadataSchema,
     LinkDetail,
+    LinkDetailSchema,
     LinkTypeEnum,
     UrlStatusEnum,
-    SearchLinkCondition
+    SearchLinkCondition,
+    SearchLinkConditionSchema
 } from './yeying/api/asset/link_pb'
-
-export { DeletedAssetMetadata } from './yeying/api/asset/recycle_pb'
-export { NamespaceMetadata, SearchNamespaceCondition } from './yeying/api/asset/namespace_pb'
-export { SolutionMetadata, SolutionCard } from './yeying/api/bulletin/bulletin_pb'
-export { UserMetadata, UserDetail, UserState, UserRoleEnum, UserStatusEnum } from './yeying/api/user/user_pb'
-export { FaqMetadata } from './yeying/api/support/support_pb'
-export { ConfigMetadata, ConfigTypeEnum } from './yeying/api/config/config_pb'
-export { SessionMetadata, SessionDetail } from './yeying/api/session/session_pb'
-export { SearchServiceCondition } from './yeying/api/service/service_pb'
-export { BlockMetadata } from './yeying/api/asset/block_pb'
+export { ServiceMetadata, ServiceMetadataSchema, ApplicationMetadata, ApplicationMetadataSchema} from './yeying/api/common/model_pb'
+export { DeletedAssetMetadata, DeletedAssetMetadataSchema } from './yeying/api/asset/recycle_pb'
+export { NamespaceMetadata, NamespaceMetadataSchema, SearchNamespaceCondition, SearchNamespaceConditionSchema} from './yeying/api/asset/namespace_pb'
+export { SolutionMetadata, SolutionMetadataSchema, SolutionCard, SolutionCardSchema } from './yeying/api/bulletin/bulletin_pb'
+export { UserMetadata, UserMetadataSchema, UserDetail, UserDetailSchema, UserState, UserStateSchema, UserRoleEnum, UserStatusEnum } from './yeying/api/user/user_pb'
+export { FaqMetadata, FaqMetadataSchema } from './yeying/api/support/support_pb'
+export { ConfigMetadata, ConfigMetadataSchema, ConfigTypeEnum } from './yeying/api/config/config_pb'
+export { SessionMetadata, SessionMetadataSchema, SessionDetail, SessionDetailSchema} from './yeying/api/session/session_pb'
+export { SearchServiceCondition, SearchServiceConditionSchema } from './yeying/api/service/service_pb'
+export { BlockMetadata, BlockMetadataSchema } from './yeying/api/asset/block_pb'
 export { convertApplicationMetadataFromIdentity, convertServiceMetadataFromIdentity } from './model/model'
 export {
     ProviderMetadata,
+    ProviderMetadataSchema,
     ProviderDescription,
+    ProviderDescriptionSchema,
     ProviderState,
+    ProviderStateSchema,
     QuotaTypeEnum,
     ProviderDetail,
+    ProviderDetailSchema,
     ModelMetadata,
+    ModelMetadataSchema,
     ProviderCodeEnum,
     ModelTypeEnum,
     ModelFeatureEnum,
     ProviderStatusEnum
 } from './yeying/api/llm/provider_pb'
+
+export * from './common/error'
+export * from './common/date'
+export * from './common/status'
