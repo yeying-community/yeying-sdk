@@ -1,5 +1,6 @@
 import {
-    BlockAddress, decodeBase64,
+    BlockAddress,
+    decodeBase64,
     decrypt,
     deriveFromBlockAddress,
     encrypt,
@@ -7,8 +8,8 @@ import {
     SecurityAlgorithm
 } from '@yeying-community/yeying-web3'
 
-import {convertToAlgorithmName} from "../../common/common";
-import {CipherTypeEnum} from "../../yeying/api/common/code_pb";
+import { convertToAlgorithmName } from '../../common/common'
+import { CipherTypeEnum } from '../../yeying/api/common/code_pb'
 
 /**
  * 提供资产加密和解密功能
@@ -30,7 +31,9 @@ export class AssetCipher {
      */
     constructor(blockAddress: BlockAddress, securityAlgorithm: SecurityAlgorithm) {
         const rawKey = deriveFromBlockAddress(blockAddress)
-        this.algorithmName = convertToAlgorithmName(CipherTypeEnum[securityAlgorithm.name as keyof typeof CipherTypeEnum])
+        this.algorithmName = convertToAlgorithmName(
+            CipherTypeEnum[securityAlgorithm.name as keyof typeof CipherTypeEnum]
+        )
         this.iv = decodeBase64(securityAlgorithm.iv)
         this.rawKey = importKey(rawKey, this.algorithmName)
     }

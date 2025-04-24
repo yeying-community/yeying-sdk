@@ -20,7 +20,7 @@ import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import { signBlockMetadata, verifyBlockMetadata } from '../model/model'
 import { isExisted } from '../../common/status'
-import {digest, encodeHex} from "@yeying-community/yeying-web3";
+import { digest, encodeHex } from '@yeying-community/yeying-web3'
 
 /**
  * 用于与区块链交互，提供数据的获取和存储功能
@@ -157,7 +157,7 @@ export class BlockProvider {
         return new Promise<BlockMetadata>(async (resolve, reject) => {
             const block = create(BlockMetadataSchema, {
                 namespaceId: namespaceId,
-                hash: encodeHex(await digest(data, "SHA-256")),
+                hash: encodeHex(await digest(data, 'SHA-256')),
                 owner: this.authenticate.getDid(),
                 uploader: this.authenticate.getDid(),
                 createdAt: getCurrentUtcString(),

@@ -1,4 +1,4 @@
-import {CipherTypeEnum, DigitalFormatEnum} from "../yeying/api/common/code_pb";
+import { CipherTypeEnum, DigitalFormatEnum } from '../yeying/api/common/code_pb'
 
 export function convertToAlgorithmName(type: CipherTypeEnum): string {
     switch (type) {

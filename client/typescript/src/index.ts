@@ -17,6 +17,7 @@ export { SessionProvider } from './client/session/session'
 export { AssetCipher } from './client/warehouse/cipher'
 export { BlockProvider } from './client/warehouse/block'
 export { ConfigProvider } from './client/config/config'
+export { Authenticate } from './client/common/authenticate'
 
 export { ServiceMetadata, ApplicationMetadata } from './yeying/api/common/model_pb'
 export {
@@ -55,7 +56,7 @@ export { ConfigMetadata, ConfigTypeEnum } from './yeying/api/config/config_pb'
 export { SessionMetadata, SessionDetail } from './yeying/api/session/session_pb'
 export { SearchServiceCondition } from './yeying/api/service/service_pb'
 export { BlockMetadata } from './yeying/api/asset/block_pb'
-export {convertApplicationMetadataFromIdentity, convertServiceMetadataFromIdentity} from './model/model'
+export { convertApplicationMetadataFromIdentity, convertServiceMetadataFromIdentity } from './model/model'
 export {
     ProviderMetadata,
     ProviderDescription,

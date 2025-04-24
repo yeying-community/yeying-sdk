@@ -21,7 +21,7 @@ import { NetworkUnavailable } from '../../common/error'
 import { ApplicationMetadata, ApplicationMetadataSchema } from '../../yeying/api/common/model_pb'
 import { signApplicationMetadata, verifyApplicationMetadata } from '../model/model'
 import { isDeleted, isExisted } from '../../common/status'
-import {MessageHeader, RequestPageSchema} from "../../yeying/api/common/message_pb";
+import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
 /**
  * ApplicationProvider 管理应用。
  */
