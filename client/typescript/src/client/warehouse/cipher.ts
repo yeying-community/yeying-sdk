@@ -1,12 +1,12 @@
 import {
-    BlockAddress,
+    BlockAddress, decodeBase64,
     decrypt,
     deriveFromBlockAddress,
     encrypt,
     importKey,
     SecurityAlgorithm
 } from '@yeying-community/yeying-web3'
-import {decodeBase64} from '../../common/codec'
+
 import {convertToAlgorithmName} from "../../common/common";
 import {CipherTypeEnum} from "../../yeying/api/common/code_pb";
 

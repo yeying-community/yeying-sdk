@@ -18,10 +18,9 @@ import { getCurrentUtcString } from '../../common/date'
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary, toJson } from '@bufbuild/protobuf'
-import { encodeHex } from '../../common/codec'
 import { signBlockMetadata, verifyBlockMetadata } from '../model/model'
 import { isExisted } from '../../common/status'
-import {digest} from "@yeying-community/yeying-web3";
+import {digest, encodeHex} from "@yeying-community/yeying-web3";
 
 /**
  * 用于与区块链交互，提供数据的获取和存储功能

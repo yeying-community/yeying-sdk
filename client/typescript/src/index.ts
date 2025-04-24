@@ -1,3 +1,22 @@
+export { NodeProvider } from './client/node/node'
+export { ProviderOption } from './client/common/model'
+export { UserProvider } from './client/user/user'
+export { BulletinProvider } from './client/bulletin/bulletin'
+export { SupportProvider } from './client/support/support'
+export { ServiceProvider } from './client/service/service'
+export { AssetProvider } from './client/warehouse/asset'
+export { LinkProvider } from './client/warehouse/link'
+export { RecycleProvider } from './client/warehouse/recycle'
+export { NamespaceProvider } from './client/warehouse/namespace'
+export { Uploader } from './client/warehouse/uploader'
+export { Downloader } from './client/warehouse/downloader'
+export { MailProvider } from './client/mail/mail'
+export { ProviderProvider } from './client/llm/provider'
+export { LlmProvider } from './client/llm/llm'
+export { SessionProvider } from './client/session/session'
+export { AssetCipher } from './client/warehouse/cipher'
+export { BlockProvider } from './client/warehouse/block'
+export { ConfigProvider } from './client/config/config'
 
 export { ServiceMetadata, ApplicationMetadata } from './yeying/api/common/model_pb'
 export {
@@ -36,7 +55,7 @@ export { ConfigMetadata, ConfigTypeEnum } from './yeying/api/config/config_pb'
 export { SessionMetadata, SessionDetail } from './yeying/api/session/session_pb'
 export { SearchServiceCondition } from './yeying/api/service/service_pb'
 export { BlockMetadata } from './yeying/api/asset/block_pb'
-
+export {convertApplicationMetadataFromIdentity, convertServiceMetadataFromIdentity} from './model/model'
 export {
     ProviderMetadata,
     ProviderDescription,
