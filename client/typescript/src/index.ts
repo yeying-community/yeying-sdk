@@ -53,7 +53,6 @@ export {
     SearchLinkCondition,
     SearchLinkConditionSchema
 } from './yeying/api/asset/link_pb'
-export { ServiceMetadata, ServiceMetadataSchema, ApplicationMetadata, ApplicationMetadataSchema} from './yeying/api/common/model_pb'
 export { DeletedAssetMetadata, DeletedAssetMetadataSchema } from './yeying/api/asset/recycle_pb'
 export { NamespaceMetadata, NamespaceMetadataSchema, SearchNamespaceCondition, SearchNamespaceConditionSchema} from './yeying/api/asset/namespace_pb'
 export { SolutionMetadata, SolutionMetadataSchema, SolutionCard, SolutionCardSchema } from './yeying/api/bulletin/bulletin_pb'
