@@ -7,6 +7,7 @@ on:
 jobs:
   build_and_publish:
     runs-on: ubuntu-24.04
+    environment: cicd
 
     steps:
       - name: Checkout code
@@ -23,6 +24,9 @@ jobs:
         run: npm install 
       - run: npm install -D rollup
       - run: npm install -D tslib
+
+      - name: run test
+        run: npm run test 
 
       - name: npm ci
         working-directory: client/typescript
