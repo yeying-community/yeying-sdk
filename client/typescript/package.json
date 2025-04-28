@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "rollup -c -w",
     "build": "NODE_ENV=production rollup -c",
+    "build:docs": "typedoc",
     "test": "vitest",
     "format": "prettier --write \"src/**/*.ts\""
   },
@@ -29,6 +30,7 @@
     "happy-dom": "^17.4.4",
     "prettier": "^3.5.3",
     "tslib": "^2.8.1",
+    "typedoc": "^0.28.3",
     "typescript": "^5.8.3",
     "vitest": "^3.1.2"
   }
