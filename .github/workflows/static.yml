@@ -39,14 +39,16 @@ jobs:
         run: npm run build:docs
 
       - name: Setup Pages
+        working-directory: client/typescript
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
-
+        working-directory: client/typescript
         uses: actions/upload-pages-artifact@v3
         with:
           path: './docs'
 
       - name: Deploy to GitHub Pages
+        working-directory: client/typescript
         id: deployment
         uses: actions/deploy-pages@v4
