@@ -1,6 +1,6 @@
 {
   "name": "@yeying-community/yeying-client-ts",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "browser": "dist/yeying-client-ts.umd.js",
   "main": "dist/yeying-client-ts.cjs.js",
   "module": "dist/yeying-client-ts.esm.js",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@bufbuild/protobuf": "^2.2.5",
     "@connectrpc/connect-web": "^2.0.2",
-    "@yeying-community/yeying-web3": "^0.0.34",
+    "@yeying-community/yeying-web3": "^0.0.35",
     "luxon": "^3.6.1"
   },
   "devDependencies": {

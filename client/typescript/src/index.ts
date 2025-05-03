@@ -63,6 +63,7 @@ export { SessionMetadata, SessionMetadataSchema, SessionDetail, SessionDetailSch
 export { SearchServiceCondition, SearchServiceConditionSchema } from './yeying/api/service/service_pb'
 export { BlockMetadata, BlockMetadataSchema } from './yeying/api/asset/block_pb'
 export { convertApplicationMetadataFromIdentity, convertServiceMetadataFromIdentity } from './model/model'
+export {ContentTypeEnum, MessageRoleEnum} from "./yeying/api/llm/llm_pb"
 export {
     ProviderMetadata,
     ProviderMetadataSchema,

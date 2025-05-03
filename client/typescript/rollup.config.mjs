@@ -23,9 +23,13 @@ export default {
             sourcemap: true,
         },
     ],
+    onwarn(warning, warn) {
+        if (warning.code === 'THIS_IS_UNDEFINED') return;
+        warn(warning);
+    },
     plugins: [
         nodeResolve(),
         commonjs(),
-        typescript(),
+        typescript({include: ["src/**/*.ts"], exclude: ["node_modules", "**/*.ut.ts", "**/*.it.ts"]}),
     ]
 };
