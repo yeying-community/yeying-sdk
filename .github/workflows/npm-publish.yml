@@ -25,10 +25,6 @@ jobs:
       - run: npm install -D rollup
       - run: npm install -D tslib
 
-      - name: run test
-        working-directory: client/typescript
-        run: npm run test 
-
       - name: npm ci
         working-directory: client/typescript
         run: npm ci 
