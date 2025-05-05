@@ -4,7 +4,6 @@ import { ProviderOption } from '../common/model'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import { generateUuid } from '../../common/string'
-import { getCurrentUtcString } from '../../common/date'
 import { signSessionMetadata, verifySessionMetadata } from '../model/model'
 import { isDeleted, isExisted } from '../../common/status'
 import {
@@ -30,6 +29,7 @@ import {
     UpdateSessionResponseBodySchema
 } from '../../yeying/api/session/session_pb'
 import { RequestPageSchema } from '../../yeying/api/common/message_pb'
+import {getCurrentUtcString} from "@yeying-community/yeying-web3";
 
 /**
  * 会话提供商，增加配置创建和查询邀请码。

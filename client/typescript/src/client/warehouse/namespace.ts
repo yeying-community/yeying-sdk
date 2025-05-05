@@ -1,6 +1,5 @@
 import { Authenticate } from '../common/authenticate'
 import { ProviderOption } from '../common/model'
-import { getCurrentUtcString } from '../../common/date'
 import { Client, createClient, type Transport } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary, toJson } from '@bufbuild/protobuf'
@@ -24,6 +23,7 @@ import { ConfigTypeEnum } from '../../yeying/api/config/config_pb'
 import { ConfigProvider } from '../config/config'
 import { signNamespaceMetadata, verifyNamespaceMetadata } from '../model/model'
 import { NotFound } from '../../common/error'
+import {getCurrentUtcString} from "@yeying-community/yeying-web3";
 
 /**
  * 命名空间提供者类，用于管理命名空间

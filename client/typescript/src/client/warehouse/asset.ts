@@ -30,7 +30,7 @@ import { create, toBinary } from '@bufbuild/protobuf'
 import { signAssetMetadata, verifyAssetMetadata } from '../model/model'
 import { isDeleted, isExisted } from '../../common/status'
 import { isBlank } from '../../common/string'
-import { getCurrentUtcString } from '../../common/date'
+import {getCurrentUtcString} from "@yeying-community/yeying-web3";
 
 /**
  * 提供对资产的管理，包括查询、版本获取、详情查看、删除等操作

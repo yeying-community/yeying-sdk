@@ -4,9 +4,7 @@ import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {ProviderProvider} from "../../../src/client/llm/provider";
 import {toJson} from "@bufbuild/protobuf";
 import {
-    ModelMetadataSchema,
     ProviderCodeEnum,
-    ProviderDescriptionSchema,
     ProviderMetadata,
     ProviderMetadataSchema,
     ProviderState,
@@ -34,17 +32,21 @@ describe('Provider', () => {
     it('descriptions', async () => {
         const llmProvider = new ProviderProvider(providerOption)
         const descriptions = await llmProvider.descriptions()
-        for (const description of descriptions) {
-            console.log(`Success to list provider description=${JSON.stringify(toJson(ProviderDescriptionSchema, description))}`)
-        }
+        console.log(`Success to list provider description=${descriptions.length}`)
+        assert.isTrue(descriptions.length > 0)
+        // for (const description of descriptions) {
+        //     console.log(`Success to list provider description=${JSON.stringify(toJson(ProviderDescriptionSchema, description))}`)
+        // }
     })
 
     it('models', async () => {
         const providerProvider = new ProviderProvider(providerOption)
         const models = await providerProvider.models()
-        for (const model of models) {
-            console.log(`Success to list llm providers=${JSON.stringify(toJson(ModelMetadataSchema, model))}`)
-        }
+        console.log(`Success to list models=${models.length}`)
+        assert.isTrue(models.length > 0)
+        // for (const model of models) {
+        //     console.log(`Success to list models=${JSON.stringify(toJson(ModelMetadataSchema, model))}`)
+        // }
     })
 
     it('add', async () => {

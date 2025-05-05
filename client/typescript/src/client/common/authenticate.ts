@@ -1,8 +1,14 @@
-import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
 import { generateUuid } from '../../common/string'
 import { MessageHeader, MessageHeaderSchema } from '../../yeying/api/common/message_pb'
 import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
-import { BlockAddress, digest, fromDidToPublicKey, signHashBytes, verifyHashBytes } from '@yeying-community/yeying-web3'
+import {
+    BlockAddress,
+    digest,
+    fromDidToPublicKey, fromISO, getCurrentUtcString,
+    isExpired, parseDateTime,
+    signHashBytes,
+    verifyHashBytes
+} from '@yeying-community/yeying-web3'
 import { InvalidArgument, NetworkUnavailable, NoPermission } from '../../common/error'
 import { composite } from '../../common/bytes'
 import { create, toBinary } from '@bufbuild/protobuf'
@@ -117,7 +123,7 @@ export class Authenticate {
      * ```
      */
     async verifyHeader(header: MessageHeader, body: Uint8Array | undefined) {
-        const datetime = parseDateTime(header.timestamp)
+        const datetime = fromISO(header.timestamp)
         if (isExpired(datetime, 5 * 60)) {
             throw new InvalidArgument('Timestamp expired')
         }
