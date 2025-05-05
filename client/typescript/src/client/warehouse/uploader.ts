@@ -1,8 +1,14 @@
 import { BlockProvider } from './block'
 import { AssetCipher } from './cipher'
-import { convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString } from '../../common/date'
 import { readBlock } from '../../common/file'
-import { decodeHex, Digest, encodeHex, SecurityAlgorithm } from '@yeying-community/yeying-web3'
+import {
+    convertDateToDateTime,
+    convertToUtcDateTime,
+    decodeHex,
+    Digest,
+    encodeHex, getCurrentUtcString,
+    SecurityAlgorithm, toISO
+} from '@yeying-community/yeying-web3'
 import { getDigitalFormatByName } from '../../common/common'
 import { AssetMetadata, AssetMetadataSchema } from '../../yeying/api/asset/asset_pb'
 import { create } from '@bufbuild/protobuf'
@@ -92,7 +98,7 @@ export class Uploader {
                     parentHash: parentHash, // 设置父哈希
                     name: file.name, // 设置文件名称
                     format: getDigitalFormatByName(file.name), // 获取文件格式
-                    createdAt: formatDateTime(convertToUtcDateTime(convertDateToDateTime(new Date(file.lastModified)))),
+                    createdAt: toISO(convertToUtcDateTime(convertDateToDateTime(new Date(file.lastModified)))),
                     updatedAt: getCurrentUtcString(),
                     description: description,
                     size: BigInt(file.size),

@@ -1,4 +1,3 @@
-import { formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond } from '../../common/date'
 import { Authenticate } from '../common/authenticate'
 import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
 import { ProviderOption } from '../common/model'
@@ -21,6 +20,13 @@ import {
 } from '../../yeying/api/invitation/invitation_pb'
 import { generateRandomString } from '../../common/string'
 import { signInvitationMetadata, verifyInvitationMetadata } from '../model/model'
+import {
+    formatDateTime,
+    getCurrentUtcDateTime,
+    getCurrentUtcString,
+    plusSecond,
+    toISO
+} from "@yeying-community/yeying-web3";
 
 /**
  * 邀请码提供商，创建和查询邀请码。
@@ -78,7 +84,7 @@ export class InvitationProvider {
                 inviter: this.authenticate.getDid(),
                 invitee: invitee,
                 createdAt: getCurrentUtcString(),
-                expiredAt: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration * 24 * 3600))
+                expiredAt: toISO(plusSecond(getCurrentUtcDateTime(), duration * 24 * 3600))
             })
 
             const body = create(CreateInvitationRequestBodySchema, { invitation: invitation })

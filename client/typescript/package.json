@@ -1,6 +1,6 @@
 {
   "name": "@yeying-community/yeying-client-ts",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "browser": "dist/yeying-client-ts.umd.js",
   "main": "dist/yeying-client-ts.cjs.js",
   "module": "dist/yeying-client-ts.esm.js",
@@ -18,14 +18,12 @@
   "dependencies": {
     "@bufbuild/protobuf": "^2.2.5",
     "@connectrpc/connect-web": "^2.0.2",
-    "@yeying-community/yeying-web3": "^0.0.35",
-    "luxon": "^3.6.1"
+    "@yeying-community/yeying-web3": "^0.0.36"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.2",
-    "@types/luxon": "^3.6.2",
     "dotenv": "^16.5.0",
     "happy-dom": "^17.4.4",
     "prettier": "^3.5.3",

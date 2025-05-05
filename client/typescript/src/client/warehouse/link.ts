@@ -31,9 +31,9 @@ import { ProviderOption } from '../common/model'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import { generateUuid } from '../../common/string'
-import { formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond } from '../../common/date'
 import { RequestPageSchema } from '../../yeying/api/common/message_pb'
 import { signLinkMetadata, verifyLinkMetadata, verifyUrlMetadata, verifyVisitorMetadata } from '../model/model'
+import {getCurrentUtcDateTime, getCurrentUtcString, plusSecond, toISO} from "@yeying-community/yeying-web3";
 
 /**
  * LinkProvider 类提供对资产分享链接的管理
@@ -91,7 +91,7 @@ export class LinkProvider {
                 uid: generateUuid(),
                 createdAt: getCurrentUtcString(),
                 startedAt: getCurrentUtcString(),
-                expiredAt: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration)),
+                expiredAt: toISO(plusSecond(getCurrentUtcDateTime(), duration)),
                 hash: hash,
                 type: type,
                 visitors: visitors && visitors.length > 0 ? visitors.join(',') : undefined

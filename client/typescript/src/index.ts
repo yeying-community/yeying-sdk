@@ -83,5 +83,4 @@ export {
 } from './yeying/api/llm/provider_pb'
 
 export * from './common/error'
-export * from './common/date'
 export * from './common/status'
