@@ -29,7 +29,7 @@ import {
     UpdateSessionResponseBodySchema
 } from '../../yeying/api/session/session_pb'
 import { RequestPageSchema } from '../../yeying/api/common/message_pb'
-import {getCurrentUtcString} from "@yeying-community/yeying-web3";
+import { getCurrentUtcString } from '@yeying-community/yeying-web3'
 
 /**
  * 会话提供商，增加配置创建和查询邀请码。

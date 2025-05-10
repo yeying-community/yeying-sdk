@@ -33,7 +33,7 @@ import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import { generateUuid } from '../../common/string'
 import { RequestPageSchema } from '../../yeying/api/common/message_pb'
 import { signLinkMetadata, verifyLinkMetadata, verifyUrlMetadata, verifyVisitorMetadata } from '../model/model'
-import {getCurrentUtcDateTime, getCurrentUtcString, plusSecond, toISO} from "@yeying-community/yeying-web3";
+import { getCurrentUtcDateTime, getCurrentUtcString, plusSecond, toISO } from '@yeying-community/yeying-web3'
 
 /**
  * LinkProvider 类提供对资产分享链接的管理

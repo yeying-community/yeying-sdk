@@ -23,7 +23,7 @@ import { ConfigTypeEnum } from '../../yeying/api/config/config_pb'
 import { ConfigProvider } from '../config/config'
 import { signNamespaceMetadata, verifyNamespaceMetadata } from '../model/model'
 import { NotFound } from '../../common/error'
-import {getCurrentUtcString} from "@yeying-community/yeying-web3";
+import { getCurrentUtcString } from '@yeying-community/yeying-web3'
 
 /**
  * 命名空间提供者类，用于管理命名空间

@@ -6,8 +6,10 @@ import {
     convertToUtcDateTime,
     decodeHex,
     Digest,
-    encodeHex, getCurrentUtcString,
-    SecurityAlgorithm, toISO
+    encodeHex,
+    getCurrentUtcString,
+    SecurityAlgorithm,
+    toISO
 } from '@yeying-community/yeying-web3'
 import { getDigitalFormatByName } from '../../common/common'
 import { AssetMetadata, AssetMetadataSchema } from '../../yeying/api/asset/asset_pb'

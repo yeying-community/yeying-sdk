@@ -4,8 +4,11 @@ import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
 import {
     BlockAddress,
     digest,
-    fromDidToPublicKey, fromISO, getCurrentUtcString,
-    isExpired, parseDateTime,
+    fromDidToPublicKey,
+    fromISO,
+    getCurrentUtcString,
+    isExpired,
+    parseDateTime,
     signHashBytes,
     verifyHashBytes
 } from '@yeying-community/yeying-web3'

@@ -19,7 +19,7 @@ import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import { signBlockMetadata, verifyBlockMetadata } from '../model/model'
 import { isExisted } from '../../common/status'
-import {digest, encodeHex, getCurrentUtcString} from '@yeying-community/yeying-web3'
+import { digest, encodeHex, getCurrentUtcString } from '@yeying-community/yeying-web3'
 
 /**
  * 用于与区块链交互，提供数据的获取和存储功能
