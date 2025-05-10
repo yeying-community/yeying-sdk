@@ -22,7 +22,7 @@ import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { Client, createClient } from '@connectrpc/connect'
 import { signUserMetadata, verifyUserMetadata, verifyUserState } from '../model/model'
 import { isDeleted, isExisted } from '../../common/status'
-import {getCurrentUtcString} from "@yeying-community/yeying-web3";
+import { getCurrentUtcString } from '@yeying-community/yeying-web3'
 
 /**
  * 提供用户管理功能的类，支持添加、查询、更新和删除用户

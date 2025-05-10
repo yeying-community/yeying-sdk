@@ -26,7 +26,7 @@ import {
     getCurrentUtcString,
     plusSecond,
     toISO
-} from "@yeying-community/yeying-web3";
+} from '@yeying-community/yeying-web3'
 
 /**
  * 邀请码提供商，创建和查询邀请码。

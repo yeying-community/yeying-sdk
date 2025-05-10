@@ -35,7 +35,7 @@ import { generateUuid } from '../../common/string'
 import { signProviderMetadata, verifyProviderMetadata, verifyProviderState } from '../model/model'
 import { isDeleted, isExisted } from '../../common/status'
 import { RequestPageSchema } from '../../yeying/api/common/message_pb'
-import {getCurrentUtcString} from "@yeying-community/yeying-web3";
+import { getCurrentUtcString } from '@yeying-community/yeying-web3'
 
 /**
  * 大模型提供商。

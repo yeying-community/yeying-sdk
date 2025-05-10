@@ -17,7 +17,7 @@ import {
     SetConfigResponseBodySchema
 } from '../../yeying/api/config/config_pb'
 import { signConfigMetadata, verifyConfigMetadata } from '../model/model'
-import {getCurrentUtcString} from "@yeying-community/yeying-web3";
+import { getCurrentUtcString } from '@yeying-community/yeying-web3'
 
 /**
  * 管理配置
