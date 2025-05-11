@@ -39,7 +39,7 @@ export class Uploader {
     assetCipher: AssetCipher
     configProvider: ConfigProvider
     chunkSize?: number
-    blockList?: BlockMetadata[]
+    isAbort: boolean = false
 
     /**
      * 构造函数
@@ -65,18 +65,21 @@ export class Uploader {
         this.assetCipher = new AssetCipher(option.blockAddress, securityAlgorithm)
     }
 
-    public getBlocks(): BlockMetadata[] {
-        return this.blockList ?? []
+    public abort() {
+        this.isAbort = true
     }
 
     /**
      * 上传文件,将文件分块处理，加密（可选），并逐块上传到区块链网络中
      * @param namespaceId - 命名空间 ID
      * @param file - 要上传的文件对象
-     * @param encrypted - 是否对文件进行加密（默认为 true）
-     * @param parentHash - 父资产的哈希值（可选）
+     * @param encrypted - 是否对文件进行加密（默认为 false）
+     * @param progressCallback - 进度，返回完整的块信息数组，没完成发送的元素是undefined
      * @param description - 资产描述（可选）
+     * @param parentHash - 父资产的哈希值（可选）
+     *
      * @returns 返回生成的资产元数据
+     *
      * @example
      * ```ts
      * const file = new File(['Hello, world!'], 'example.txt', { type: 'text/plain' })
@@ -89,8 +92,9 @@ export class Uploader {
         namespaceId: string,
         file: File,
         encrypted: boolean = false,
+        progressCallback?: Function,
+        description?: string,
         parentHash?: string,
-        description?: string
     ): Promise<AssetMetadata> {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
             try {
@@ -124,13 +128,17 @@ export class Uploader {
                 const assetDigest = new Digest()
                 const mergeDigest = new Digest()
                 const chunkList = new Array(asset.chunkCount) // 用于存储每个块的元数据
-                this.blockList = new Array(asset.chunkCount)
+                const blockList: BlockMetadata[] = new Array(asset.chunkCount)
 
                 // 按顺序上传文件的每一块
-                for (let i = 0; i < asset.chunkCount; i++) {
-                    const start = i * this.chunkSize
+                for (let index = 0; index < asset.chunkCount; index++) {
+                    if (this.isAbort) {
+                        return
+                    }
+
+                    const start = index * this.chunkSize
                     const end = Math.min(file.size, start + this.chunkSize)
-                    console.log(`Try to read the index=${i} chunk, size=${end - start}`)
+                    console.log(`Try to read the index=${index} chunk, size=${end - start}`)
                     let data = await readBlock(file, start, end) // 读取文件块
                     assetDigest.update(data) // 更新资产的哈希
 
@@ -142,8 +150,12 @@ export class Uploader {
                     // 上传块数据到区块存储
                     const block = await this.blockProvider.put(namespaceId, data)
                     mergeDigest.update(decodeHex(block.hash)) // 更新合并哈希
-                    chunkList[i] = block?.hash
-                    this.blockList[i] = block
+                    chunkList[index] = block?.hash
+                    blockList[index] = block
+
+                    if (progressCallback) {
+                        progressCallback(blockList)
+                    }
                 }
 
                 asset.chunks = chunkList // 资产块的元数据

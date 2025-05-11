@@ -22,7 +22,7 @@ export class Downloader {
     blockProvider: BlockProvider
     assetProvider: AssetProvider
     assetCipher: AssetCipher
-    blockList?: BlockMetadata[]
+    isAbort: boolean = false
 
     /**
      * 构造函数
@@ -41,16 +41,16 @@ export class Downloader {
         this.assetCipher = new AssetCipher(option.blockAddress, securityAlgorithm)
     }
 
-
-    public getBlocks() {
-        return this.blockList
+    public abort() {
+        this.isAbort = true
     }
 
     /**
      * 下载文件,根据命名空间 ID 和哈希值下载文件,如果文件被加密，会自动解密
      * @param namespaceId - 命名空间 ID
      * @param hash - 资产的哈希值
-     * @param callback - 可选，如果设置了回调函数，表示资产块下载完毕后，使用回调函数通知，否则执行合并
+     * @param progressCallback - 进度，返回完整的块信息数组，没完成下载的元素是undefined
+     * @param blockCallback - 可选，如果设置了回调函数，表示资产块下载完毕后，使用回调函数通知，否则执行合并
      *
      * @returns  如果设置了函数，则返块列表，否则，返回块列表和整个文件的内容（Blob）
      * @example
@@ -60,20 +60,20 @@ export class Downloader {
      *   .catch(err => console.error(err))
      * ```
      */
-    download(namespaceId: string, hash: string, callback?: BlockCallback): Promise<DownloadResult> {
+    download(namespaceId: string, hash: string, progressCallback?: Function, blockCallback?: BlockCallback): Promise<DownloadResult> {
         return new Promise<DownloadResult>(async (resolve, reject) => {
             try {
                 const asset = await this.assetProvider.detail(namespaceId, hash)
                 console.log(`Try to download asset=${JSON.stringify(toJson(AssetMetadataSchema, asset))}`)
 
                 const chunkBlobs = new Array(asset.chunkCount).fill(undefined)
+                const blockList: BlockMetadata[] = new Array(asset.chunkCount)
 
-                /**
-                 * 递归下载每个数据块。
-                 *
-                 * @param index - 当前下载的数据块索引。
-                 */
-                const downloadChunk = async (index: number) => {
+                for (let index: number = 0; index < asset.chunkCount; index++) {
+                    if (this.isAbort) {
+                        return
+                    }
+
                     // 下载数据块
                     const result = await this.blockProvider.get(namespaceId, asset.chunks[index])
                     if (asset.isEncrypted) {
@@ -83,32 +83,27 @@ export class Downloader {
 
                     // 将解密后的数据块转换为 Blob
                     const blockData =  new Blob([result.data], { type: 'application/octet-stream' })
-                    if (this.blockList === undefined) {
-                        this.blockList = new Array(asset.chunkCount)
-                    }
+                    blockList[index] = result.block
 
-                    this.blockList[index] = result.block
-                    if (callback) {
-                        callback(result.block, blockData)
+                    if (blockCallback) {
+                        blockCallback(result.block, blockData)
                     } else {
                         chunkBlobs[index] = blockData
                     }
 
+                    if (progressCallback) {
+                        progressCallback(blockList)
+                    }
+
                     // 如果所有块都已下载，合并为一个 Blob 并返回
                     if (index === chunkBlobs.length - 1) {
-                        if (callback) {
-                            resolve({blocks: this.blockList})
+                        if (blockCallback) {
+                            resolve({blocks: blockList})
                         } else {
-                            resolve({blocks: this.blockList, data: new Blob(chunkBlobs, { type: 'application/octet-stream' })})
+                            resolve({blocks: blockList, data: new Blob(chunkBlobs, { type: 'application/octet-stream' })})
                         }
-                    } else {
-                        // 否则继续下载下一个块
-                        await downloadChunk(index + 1)
                     }
                 }
-
-                // 从第0块开始下载，当前是顺序下载，后续可以支持并发下载
-                await downloadChunk(0)
             } catch (e) {
                 console.log(`Fail to download asset, namespaceId=${namespaceId}, hash=${hash}`, e)
                 return reject(e)
