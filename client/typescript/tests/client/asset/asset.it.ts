@@ -60,8 +60,8 @@ describe('Asset', () => {
 
     it('download', async () => {
         const downloader = new Downloader(providerOption, identity.securityConfig.algorithm)
-        const blob = await downloader.download(namespace.uid, hash)
-        const text = await readFile(blob as Blob, ResultDataType.Text)
+        const result = await downloader.download(namespace.uid, hash)
+        const text = await readFile(result.data as unknown as Blob, ResultDataType.Text)
         assert.equal(text as string, content)
         console.log(`Success to download asset, hash=${hash}, text=${text}`)
     })

@@ -6,6 +6,14 @@ import { ProviderOption } from '../common/model'
 import { SecurityAlgorithm } from '@yeying-community/yeying-web3'
 import { AssetProvider } from './asset'
 import {BlockMetadata} from "../../yeying/api/asset/block_pb";
+import {Blob} from "happy-dom";
+
+export type BlockCallback = (block: BlockMetadata, data: Blob) => void
+
+export interface DownloadResult {
+    blocks: BlockMetadata[],
+    data?: Blob
+}
 
 /**
  * 用于下载资产数据，支持从区块提供者获取数据并进行解密
@@ -33,11 +41,18 @@ export class Downloader {
         this.assetCipher = new AssetCipher(option.blockAddress, securityAlgorithm)
     }
 
+
+    public getBlocks() {
+        return this.blockList
+    }
+
     /**
      * 下载文件,根据命名空间 ID 和哈希值下载文件,如果文件被加密，会自动解密
      * @param namespaceId - 命名空间 ID
      * @param hash - 资产的哈希值
-     * @returns 返回下载的文件（Blob）
+     * @param callback - 可选，如果设置了回调函数，表示资产块下载完毕后，使用回调函数通知，否则执行合并
+     *
+     * @returns  如果设置了函数，则返块列表，否则，返回块列表和整个文件的内容（Blob）
      * @example
      * ```ts
      * downloader.download('example-namespace', 'example-hash')
@@ -45,8 +60,8 @@ export class Downloader {
      *   .catch(err => console.error(err))
      * ```
      */
-    download(namespaceId: string, hash: string) {
-        return new Promise(async (resolve, reject) => {
+    download(namespaceId: string, hash: string, callback?: BlockCallback): Promise<DownloadResult> {
+        return new Promise<DownloadResult>(async (resolve, reject) => {
             try {
                 const asset = await this.assetProvider.detail(namespaceId, hash)
                 console.log(`Try to download asset=${JSON.stringify(toJson(AssetMetadataSchema, asset))}`)
@@ -67,16 +82,25 @@ export class Downloader {
                     }
 
                     // 将解密后的数据块转换为 Blob
-                    chunkBlobs[index] = new Blob([result.data], { type: 'application/octet-stream' })
+                    const blockData =  new Blob([result.data], { type: 'application/octet-stream' })
                     if (this.blockList === undefined) {
                         this.blockList = new Array(asset.chunkCount)
                     }
 
                     this.blockList[index] = result.block
+                    if (callback) {
+                        callback(result.block, blockData)
+                    } else {
+                        chunkBlobs[index] = blockData
+                    }
 
                     // 如果所有块都已下载，合并为一个 Blob 并返回
                     if (index === chunkBlobs.length - 1) {
-                        resolve(new Blob(chunkBlobs, { type: 'application/octet-stream' }))
+                        if (callback) {
+                            resolve({blocks: this.blockList})
+                        } else {
+                            resolve({blocks: this.blockList, data: new Blob(chunkBlobs, { type: 'application/octet-stream' })})
+                        }
                     } else {
                         // 否则继续下载下一个块
                         await downloadChunk(index + 1)
