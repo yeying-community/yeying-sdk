@@ -73,7 +73,7 @@ export class BlockProvider {
      * ```
      */
     get(namespaceId: string, hash: string) {
-        return new Promise<Uint8Array>(async (resolve, reject) => {
+        return new Promise<any>(async (resolve, reject) => {
             const body = create(GetBlockRequestBodySchema, {
                 namespaceId: namespaceId,
                 hash: hash
@@ -91,7 +91,7 @@ export class BlockProvider {
             try {
                 const res = await this.client.get(request)
                 await this.authenticate.doResponse(res, GetBlockResponseBodySchema)
-                resolve(res.data)
+                resolve({data: res.data, block: res.body?.block})
             } catch (err) {
                 console.error('Fail to get block', err)
             }
