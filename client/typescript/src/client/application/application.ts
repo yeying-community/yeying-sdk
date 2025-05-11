@@ -26,7 +26,7 @@ import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/messag
  * ApplicationProvider 管理应用。
  */
 export class ApplicationProvider {
-    private authenticate: Authenticate
+    private readonly authenticate: Authenticate
     private client: Client<typeof Application>
 
     /**

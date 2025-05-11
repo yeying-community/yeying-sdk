@@ -5,6 +5,7 @@ import { toJson } from '@bufbuild/protobuf'
 import { ProviderOption } from '../common/model'
 import { SecurityAlgorithm } from '@yeying-community/yeying-web3'
 import { AssetProvider } from './asset'
+import {BlockMetadata} from "../../yeying/api/asset/block_pb";
 
 /**
  * 用于下载资产数据，支持从区块提供者获取数据并进行解密
@@ -13,6 +14,7 @@ export class Downloader {
     blockProvider: BlockProvider
     assetProvider: AssetProvider
     assetCipher: AssetCipher
+    blockList?: BlockMetadata[]
 
     /**
      * 构造函数
@@ -58,14 +60,19 @@ export class Downloader {
                  */
                 const downloadChunk = async (index: number) => {
                     // 下载数据块
-                    let data = await this.blockProvider.get(namespaceId, asset.chunks[index])
+                    const result = await this.blockProvider.get(namespaceId, asset.chunks[index])
                     if (asset.isEncrypted) {
                         // 如果资产加密，解密数据块
-                        data = await this.assetCipher.decrypt(data)
+                        result.data = await this.assetCipher.decrypt(result.data)
                     }
 
                     // 将解密后的数据块转换为 Blob
-                    chunkBlobs[index] = new Blob([data], { type: 'application/octet-stream' })
+                    chunkBlobs[index] = new Blob([result.data], { type: 'application/octet-stream' })
+                    if (this.blockList === undefined) {
+                        this.blockList = new Array(asset.chunkCount)
+                    }
+
+                    this.blockList[index] = result.block
 
                     // 如果所有块都已下载，合并为一个 Blob 并返回
                     if (index === chunkBlobs.length - 1) {

@@ -18,6 +18,7 @@ import { ProviderOption } from '../common/model'
 import { AssetProvider } from './asset'
 import { ConfigProvider } from '../config/config'
 import { ConfigTypeEnum } from '../../yeying/api/config/config_pb'
+import {BlockMetadata} from "../../yeying/api/asset/block_pb";
 
 /**
  * 该类用于上传资产文件，通过将文件分块后上传，每个块加密（可选）并生成哈希值，最后对整个资产进行签名
@@ -38,13 +39,13 @@ export class Uploader {
     assetCipher: AssetCipher
     configProvider: ConfigProvider
     chunkSize?: number
+    blockList?: BlockMetadata[]
 
     /**
      * 构造函数
      *
      * @param option - 包含代理地址和区块地址信息的配置选项
      * @param securityAlgorithm - 安全算法配置，包含算法名称和 IV
-     *
      * @example
      *
      * ```ts
@@ -62,6 +63,10 @@ export class Uploader {
         this.blockProvider = new BlockProvider(option)
         this.assetProvider = new AssetProvider(option)
         this.assetCipher = new AssetCipher(option.blockAddress, securityAlgorithm)
+    }
+
+    public getBlocks(): BlockMetadata[] {
+        return this.blockList ?? []
     }
 
     /**
@@ -119,6 +124,7 @@ export class Uploader {
                 const assetDigest = new Digest()
                 const mergeDigest = new Digest()
                 const chunkList = new Array(asset.chunkCount) // 用于存储每个块的元数据
+                this.blockList = new Array(asset.chunkCount)
 
                 // 按顺序上传文件的每一块
                 for (let i = 0; i < asset.chunkCount; i++) {
@@ -137,6 +143,7 @@ export class Uploader {
                     const block = await this.blockProvider.put(namespaceId, data)
                     mergeDigest.update(decodeHex(block.hash)) // 更新合并哈希
                     chunkList[i] = block?.hash
+                    this.blockList[i] = block
                 }
 
                 asset.chunks = chunkList // 资产块的元数据
